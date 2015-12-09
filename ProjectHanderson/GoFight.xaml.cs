@@ -30,34 +30,53 @@ namespace ProjectHanderson
             //leftbox.ManipulationStarted += Leftbox_ManipulationStarted;
             //leftbox.ManipulationDelta += Leftbox_ManipulationDelta;
 
-            leftbox.AddHandler(UIElement.ManipulationStartedEvent, 
-                new ManipulationStartedEventHandler(Leftbox_ManipulationStarted), true);
-            leftbox.AddHandler(UIElement.ManipulationDeltaEvent,
-                new ManipulationDeltaEventHandler(Leftbox_ManipulationDelta), true);
+            //leftpanel.AddHandler(UIElement.ManipulationStartedEvent, 
+            //    new ManipulationStartedEventHandler(Leftbox_ManipulationStarted), true);
+
+            //leftpanel.AddHandler(UIElement.ManipulationDeltaEvent,
+            //    new ManipulationDeltaEventHandler(Leftbox_ManipulationDelta), true);
+
+            //Debug.WriteLine("current position: {0}", position);
+
+            //leftpanel.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY;
         }
 
+       
         private double position = 0;
 
         private void Leftbox_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            //throw new NotImplementedException();
-            position = e.Position.Y;
-            Debug.WriteLine("current position: {0}", position);
+            position = e.Position.X;
+            Debug.WriteLine("current position Delta: {0}", position);
+
+            updatePosition(position);
         }
 
         private void Leftbox_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
-            //throw new NotImplementedException();
-            position = e.Position.Y;
-            Debug.WriteLine("current position: {0}", position);
-
+            position = e.Position.X;
+            Debug.WriteLine("current position Start: {0}", position);
         }
 
 
         private void updatePosition(double position)
         {
             //bt.Margin.Left
+            Thickness currentpos = bt.Margin;
+            currentpos.Left = position;
+            bt.Margin = currentpos;
         }
 
+        private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            var bounds = Window.Current.Bounds;
+            var width = bounds.Width;
+
+            Thickness currentpos = bt.Margin;
+            currentpos.Left = e.NewValue / 120 * width;
+            bt.Margin = currentpos;
+
+            
+        }
     }
 }
