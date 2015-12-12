@@ -1,11 +1,16 @@
-﻿using System;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
+using Microsoft.Graphics.Canvas.UI.Xaml;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -61,22 +66,41 @@ namespace ProjectHanderson
 
         private void updatePosition(double position)
         {
-            //bt.Margin.Left
-            Thickness currentpos = bt.Margin;
-            currentpos.Left = position;
-            bt.Margin = currentpos;
+            ////bt.Margin.Left
+            //Thickness currentpos = bt.Margin;
+            //currentpos.Left = position;
+            //bt.Margin = currentpos;
         }
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            var bounds = Window.Current.Bounds;
-            var width = bounds.Width;
+            //var bounds = Window.Current.Bounds;
+            //var width = bounds.Width;
 
-            Thickness currentpos = bt.Margin;
-            currentpos.Left = e.NewValue / 120 * width;
-            bt.Margin = currentpos;
+            //Thickness currentpos = bt.Margin;
+            //currentpos.Left = e.NewValue / 120 * width;
+            //bt.Margin = currentpos;
 
             
         }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.myWidget.RemoveFromVisualTree();
+            this.myWidget = null;
+        }
+
+        CanvasSolidColorBrush redBrush;
+
+
+
+
+
+        async void myWidget_Draw(CanvasControl sender, CanvasDrawEventArgs args)
+        {
+            var bitmapTiger = await CanvasBitmap.LoadAsync(sender, "Images/card.jpg");
+            args.DrawingSession.DrawImage(bitmapTiger);
+        }
+
     }
 }

@@ -5,22 +5,30 @@
     xmlns:local="using:ProjectHanderson"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    mc:Ignorable="d"
+    
+    Unloaded="Page_Unloaded"
+    >
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="bt">assss</Button>
+        <canvas:CanvasControl x:Name="myWidget" 
+
+                              Draw="myWidget_Draw" 
+                              ClearColor="CornFlowerBlue"></canvas:CanvasControl>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid x:Name="leftpanel" Grid.Column="0">
-                <Grid.Background>
-                    <SolidColorBrush Opacity="0.1" Color="Aqua"></SolidColorBrush>
-                </Grid.Background>
-                <Slider VerticalAlignment="Bottom" Margin="0,0,0,50" Width="200" Value="50" ValueChanged="Slider_ValueChanged" Style="{StaticResource SliderStyle1}"></Slider>
+                <Slider VerticalAlignment="Bottom" Margin="0,0,0,0" Width="200" Height="60" Value="50" ValueChanged="Slider_ValueChanged" ></Slider>
             </Grid>
-            <Grid x:Name="rightpanel" Grid.Column="1"></Grid>
+            <Grid x:Name="rightpanel" Grid.Column="1">
+                
+            </Grid>
+           
         </Grid>
         
     </Grid>
