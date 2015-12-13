@@ -49,30 +49,30 @@ namespace ProjectHanderson
         }
 
        
-        private double position = 0;
+        //private double position = 0;
 
-        private void Leftbox_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-        {
-            position = e.Position.X;
-            Debug.WriteLine("current position Delta: {0}", position);
+        //private void Leftbox_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        //{
+        //    position = e.Position.X;
+        //    Debug.WriteLine("current position Delta: {0}", position);
 
-            updatePosition(position);
-        }
+        //    updatePosition(position);
+        //}
 
-        private void Leftbox_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
-        {
-            position = e.Position.X;
-            Debug.WriteLine("current position Start: {0}", position);
-        }
+        //private void Leftbox_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+        //{
+        //    position = e.Position.X;
+        //    Debug.WriteLine("current position Start: {0}", position);
+        //}
 
 
-        private void updatePosition(double position)
-        {
-            ////bt.Margin.Left
-            //Thickness currentpos = bt.Margin;
-            //currentpos.Left = position;
-            //bt.Margin = currentpos;
-        }
+        //private void updatePosition(double position)
+        //{
+        //    ////bt.Margin.Left
+        //    //Thickness currentpos = bt.Margin;
+        //    //currentpos.Left = position;
+        //    //bt.Margin = currentpos;
+        //}
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
@@ -101,8 +101,9 @@ namespace ProjectHanderson
             }
         }
 
+        CanvasDrawingSession currentDrawingSession;
 
-        async void myWidget_Draw(CanvasControl sender, CanvasDrawEventArgs args)
+        void myWidget_Draw(CanvasControl sender, CanvasDrawEventArgs args)
         {
             ////var bitmapTiger = await CanvasBitmap.LoadAsync(sender, "Images/card.jpg");
             ////args.DrawingSession.DrawImage(bitmapTiger);
@@ -116,8 +117,26 @@ namespace ProjectHanderson
             //    args.DrawingSession.DrawImage(blur);
             //}
             //count++;
-            
-            args.DrawingSession.DrawImage(bitmapTiger,Offset,0);
+
+            //float width = (float)sender.ActualWidth / 3.0f;
+            //// assuming this fits...   
+            //float height = (float)(width / this.image.SizeInPixels.Width * this.image.SizeInPixels.Height);
+
+            currentDrawingSession = args.DrawingSession;
+
+            ScaleEffect scale = new ScaleEffect()
+            {
+                Source = this.bitmapTiger,
+                Scale = new Vector2()
+                {
+                    X = (float)(100 / this.bitmapTiger.Size.Width),
+                    Y = (float)(100 / this.bitmapTiger.Size.Height)
+                }
+            };
+            currentDrawingSession.DrawImage(scale, Offset,0 );
+
+            //args.DrawingSession.DrawEllipse(155, 115, 80, 30, Colors.Black, 3);
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -144,6 +163,9 @@ namespace ProjectHanderson
         {
 
             bitmapTiger = await CanvasBitmap.LoadAsync(sender, "Monster/1.png");
+
+            
+
             bitmapTiger1 = await CanvasBitmap.LoadAsync(sender, "Monster/2.png");
             //CanvasCommandList cl = new CanvasCommandList(sender);
             //using (CanvasDrawingSession clds = cl.CreateDrawingSession())
@@ -167,6 +189,8 @@ namespace ProjectHanderson
             //    Source = cl,
             //    BlurAmount = 0.0f
             //};
+
+       
 
         }
 
