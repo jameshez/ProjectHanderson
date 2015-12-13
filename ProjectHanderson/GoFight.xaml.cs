@@ -2,6 +2,7 @@
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using ProjectHanderson.Helper;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -76,7 +77,7 @@ namespace ProjectHanderson
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            Offset = (float)(e.NewValue / 100 * (Window.Current.Bounds.Width- bitmapTiger.Size.Width));
+            Offset = (float)(e.NewValue / 100 * (ScreenHelper.CurrentScreenSize().Width - bitmapTiger.Size.Width));
             myWidget.Invalidate();
         }
 
@@ -133,7 +134,11 @@ namespace ProjectHanderson
                     Y = (float)(100 / this.bitmapTiger.Size.Height)
                 }
             };
-            currentDrawingSession.DrawImage(scale, Offset,0 );
+           
+
+            currentDrawingSession.DrawImage(bitmapTiger1, 0, 0);
+
+            currentDrawingSession.DrawImage(scale, Offset, (float)bitmapTiger1.Size.Height-100);
 
             //args.DrawingSession.DrawEllipse(155, 115, 80, 30, Colors.Black, 3);
 
@@ -161,12 +166,9 @@ namespace ProjectHanderson
         GaussianBlurEffect blur1;
         private async void myWidget_CreateResources(CanvasControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
+            args.TrackAsyncAction(CreateResourcesAsync(sender).AsAsyncAction());
 
-            bitmapTiger = await CanvasBitmap.LoadAsync(sender, "Monster/1.png");
-
-            
-
-            bitmapTiger1 = await CanvasBitmap.LoadAsync(sender, "Monster/2.png");
+        
             //CanvasCommandList cl = new CanvasCommandList(sender);
             //using (CanvasDrawingSession clds = cl.CreateDrawingSession())
             //{
@@ -192,6 +194,12 @@ namespace ProjectHanderson
 
        
 
+        }
+
+        private async Task CreateResourcesAsync(CanvasControl sender)
+        {
+            bitmapTiger = await CanvasBitmap.LoadAsync(sender, "Monster/1.png");
+            bitmapTiger1 = await CanvasBitmap.LoadAsync(sender, "Monster/2.png");
         }
 
         Random rnd = new Random();
