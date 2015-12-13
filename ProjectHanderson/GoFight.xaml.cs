@@ -1,11 +1,13 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -74,14 +76,8 @@ namespace ProjectHanderson
 
         private void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            //var bounds = Window.Current.Bounds;
-            //var width = bounds.Width;
-
-            //Thickness currentpos = bt.Margin;
-            //currentpos.Left = e.NewValue / 120 * width;
-            //bt.Margin = currentpos;
-
-            
+            Offset = (float)(e.NewValue / 100 * (Window.Current.Bounds.Width- bitmapTiger.Size.Width));
+            myWidget.Invalidate();
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -93,14 +89,107 @@ namespace ProjectHanderson
         CanvasSolidColorBrush redBrush;
 
 
-
+        private float Offset
+        {
+            get
+            {
+                return offsetWidth;
+            }
+            set
+            {
+                offsetWidth = (float)value;
+            }
+        }
 
 
         async void myWidget_Draw(CanvasControl sender, CanvasDrawEventArgs args)
         {
-            var bitmapTiger = await CanvasBitmap.LoadAsync(sender, "Images/card.jpg");
-            args.DrawingSession.DrawImage(bitmapTiger);
+            ////var bitmapTiger = await CanvasBitmap.LoadAsync(sender, "Images/card.jpg");
+            ////args.DrawingSession.DrawImage(bitmapTiger);
+            //if (count % 2 == 0)
+            //{
+            //    args.DrawingSession.DrawImage(blur1);
+
+            //}
+            //else
+            //{
+            //    args.DrawingSession.DrawImage(blur);
+            //}
+            //count++;
+            
+            args.DrawingSession.DrawImage(bitmapTiger,Offset,0);
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //CanvasDevice device = CanvasDevice.GetSharedDevice();
+            //float height = 600;
+            //float width = 600;
+            //CanvasRenderTarget offscreen = new CanvasRenderTarget(device, width, height, 96);
+
+            //using (CanvasDrawingSession ds = offscreen.CreateDrawingSession())
+            //{
+            //    ds.Clear(Colors.FloralWhite);
+            //    ds.DrawImage(blur);
+            //}
+            
+
+
+        }
+
+        int count = 0;
+        GaussianBlurEffect blur;
+        GaussianBlurEffect blur1;
+        private async void myWidget_CreateResources(CanvasControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
+        {
+
+            bitmapTiger = await CanvasBitmap.LoadAsync(sender, "Monster/1.png");
+            bitmapTiger1 = await CanvasBitmap.LoadAsync(sender, "Monster/2.png");
+            //CanvasCommandList cl = new CanvasCommandList(sender);
+            //using (CanvasDrawingSession clds = cl.CreateDrawingSession())
+            //{
+            //    for (int i = 0; i < 100; i++)
+            //    {
+            //        clds.DrawText("Hello, World!", RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
+            //        clds.DrawCircle(RndPosition(), RndRadius(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
+            //        clds.DrawLine(RndPosition(), RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
+            //    }
+            //}
+
+            //blur = new GaussianBlurEffect()
+            //{
+            //    Source = cl,
+            //    BlurAmount = 10.0f
+            //};
+
+            //blur1 = new GaussianBlurEffect()
+            //{
+            //    Source = cl,
+            //    BlurAmount = 0.0f
+            //};
+
+        }
+
+        Random rnd = new Random();
+        private float offsetWidth;
+        private CanvasBitmap bitmapTiger;
+        private CanvasBitmap bitmapTiger1;
+
+        private Vector2 RndPosition()
+        {
+            double x = rnd.NextDouble() * 500f;
+            double y = rnd.NextDouble() * 500f;
+            return new Vector2((float)x, (float)y);
+        }
+
+        private float RndRadius()
+        {
+            return (float)rnd.NextDouble() * 150f;
+        }
+
+        private byte RndByte()
+        {
+            return (byte)rnd.Next(256);
+        }
     }
 }

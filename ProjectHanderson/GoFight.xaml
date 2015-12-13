@@ -8,13 +8,12 @@
     
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     mc:Ignorable="d"
-    
     Unloaded="Page_Unloaded"
     >
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <canvas:CanvasControl x:Name="myWidget" 
-
+                              CreateResources="myWidget_CreateResources"
                               Draw="myWidget_Draw" 
                               ClearColor="CornFlowerBlue"></canvas:CanvasControl>
         <Grid>
@@ -22,14 +21,13 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="leftpanel" Grid.Column="0">
-                <Slider VerticalAlignment="Bottom" Margin="0,0,0,0" Width="200" Height="60" Value="50" ValueChanged="Slider_ValueChanged" ></Slider>
+            <Grid Grid.Column="0">
+                <Slider VerticalAlignment="Bottom" ValueChanged="Slider_ValueChanged"></Slider>
             </Grid>
-            <Grid x:Name="rightpanel" Grid.Column="1">
-                
+            <Grid Grid.Column="1">
+
             </Grid>
-           
         </Grid>
-        
+
     </Grid>
 </Page>
