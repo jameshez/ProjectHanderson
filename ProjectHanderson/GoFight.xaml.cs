@@ -35,6 +35,9 @@ namespace ProjectHanderson
         {
             this.InitializeComponent();
 
+            rightPanel.AddHandler(Grid.PointerPressedEvent,
+                new PointerEventHandler(rightPanel_PointerPressed), true);
+
             //leftbox.ManipulationStarted += Leftbox_ManipulationStarted;
             //leftbox.ManipulationDelta += Leftbox_ManipulationDelta;
 
@@ -48,8 +51,15 @@ namespace ProjectHanderson
 
             //leftpanel.ManipulationMode = ManipulationModes.TranslateX | ManipulationModes.TranslateY;
         }
+        int n = 0;
+        private void rightPanel_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            //throw new NotImplementedException();
+            n++;
+            myWidget.Invalidate();
+        }
 
-       
+
         //private double position = 0;
 
         //private void Leftbox_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
@@ -130,40 +140,27 @@ namespace ProjectHanderson
                 Source = this.bitmapTiger,
                 Scale = new Vector2()
                 {
-                    X = (float)(100 / this.bitmapTiger.Size.Width),
-                    Y = (float)(100 / this.bitmapTiger.Size.Height)
+                    X = (float)(200 / this.bitmapTiger.Size.Width),
+                    Y = (float)(200 / this.bitmapTiger.Size.Height)
                 }
             };
            
 
-            currentDrawingSession.DrawImage(bitmapTiger1, 0, 0);
+            currentDrawingSession.DrawImage(bitmapTiger1, 100, 100);
 
             currentDrawingSession.DrawImage(scale, Offset, (float)bitmapTiger1.Size.Height-100);
 
+            if (n != 0)
+            {
+
+                currentDrawingSession.DrawText("Combo " + n, RndPosition(), Color.FromArgb(255, RndByte(), RndByte(), RndByte()));
+            }
             //args.DrawingSession.DrawEllipse(155, 115, 80, 30, Colors.Black, 3);
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //CanvasDevice device = CanvasDevice.GetSharedDevice();
-            //float height = 600;
-            //float width = 600;
-            //CanvasRenderTarget offscreen = new CanvasRenderTarget(device, width, height, 96);
-
-            //using (CanvasDrawingSession ds = offscreen.CreateDrawingSession())
-            //{
-            //    ds.Clear(Colors.FloralWhite);
-            //    ds.DrawImage(blur);
-            //}
-            
 
 
-        }
-
-        int count = 0;
-        GaussianBlurEffect blur;
-        GaussianBlurEffect blur1;
         private async void myWidget_CreateResources(CanvasControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
             args.TrackAsyncAction(CreateResourcesAsync(sender).AsAsyncAction());
@@ -209,8 +206,8 @@ namespace ProjectHanderson
 
         private Vector2 RndPosition()
         {
-            double x = rnd.NextDouble() * 500f;
-            double y = rnd.NextDouble() * 500f;
+            double x = rnd.NextDouble() * ScreenHelper.CurrentScreenSize().Width;
+            double y = rnd.NextDouble() * ScreenHelper.CurrentScreenSize().Height;
             return new Vector2((float)x, (float)y);
         }
 

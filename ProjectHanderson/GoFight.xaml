@@ -24,8 +24,10 @@
             <Grid Grid.Column="0">
                 <Slider VerticalAlignment="Bottom" ValueChanged="Slider_ValueChanged"></Slider>
             </Grid>
-            <Grid Grid.Column="1">
-
+            <Grid x:Name="rightPanel" Grid.Column="1">
+                <Grid.Background>
+                    <SolidColorBrush Color="Beige" Opacity="0.1"></SolidColorBrush>
+                </Grid.Background>
             </Grid>
         </Grid>
 
