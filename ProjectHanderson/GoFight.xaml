@@ -15,14 +15,20 @@
         <canvas:CanvasControl x:Name="myWidget" 
                               CreateResources="myWidget_CreateResources"
                               Draw="myWidget_Draw" 
-                              ClearColor="CornFlowerBlue"></canvas:CanvasControl>
+                              ></canvas:CanvasControl>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Slider VerticalAlignment="Bottom" ValueChanged="Slider_ValueChanged"></Slider>
+                <AppBarButton HorizontalAlignment="Center" 
+                              VerticalAlignment="Bottom" 
+                              Label="Link" Icon="Add"
+                              ManipulationStarted="AppBarButton_ManipulationStarted"
+                              ManipulationDelta="AppBarButton_ManipulationDelta"
+                              ></AppBarButton>
+                <!--<Slider VerticalAlignment="Bottom" ValueChanged="Slider_ValueChanged"></Slider>-->
             </Grid>
             <Grid x:Name="rightPanel" Grid.Column="1">
                 <Grid.Background>

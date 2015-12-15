@@ -21,5 +21,14 @@ namespace ProjectHanderson.Helper
             return screen;
         }
 
+        public static Point GetBossPosition()
+        {
+            Point ptr = new Point();
+
+            
+
+            return ptr;
+        }
+
     }
 }

@@ -220,5 +220,15 @@ namespace ProjectHanderson
         {
             return (byte)rnd.Next(256);
         }
+
+        private void AppBarButton_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+        {
+
+        }
+
+        private void AppBarButton_ManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+
+        }
     }
 }
